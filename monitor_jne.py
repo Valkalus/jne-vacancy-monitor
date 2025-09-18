@@ -89,6 +89,18 @@ def main():
     save_seen(seen)
 
 if __name__ == "__main__":
+    main()
+
+if __name__ == "__main__":
     print("🔧 EJECUTANDO MODO DE PRUEBA...")
-    from notifier import notify_telegram  # si la función está en el mismo archivo, llama directo
-    notify_telegram("✅ PRUEBA: El sistema de monitor JNE está funcionando y puede enviarte alertas.")
+    # Comprobamos si las variables de entorno están presentes
+    import os
+    print("DEBUG: TELEGRAM_TOKEN presente?", bool(os.getenv("TELEGRAM_TOKEN")))
+    print("DEBUG: TELEGRAM_CHAT_ID presente?", bool(os.getenv("TELEGRAM_CHAT_ID")))
+
+    # Enviar prueba solo si las secrets están configuradas
+    if os.getenv("TELEGRAM_TOKEN") and os.getenv("TELEGRAM_CHAT_ID"):
+        send_telegram("✅ PRUEBA: El sistema de monitor JNE está funcionando y puede enviarte alertas.")
+    else:
+        print("Telegram no está configurado en las Secrets. Revisa TELEGRAM_TOKEN y TELEGRAM_CHAT_ID.")
+
