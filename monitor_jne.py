@@ -89,8 +89,6 @@ def main():
     save_seen(seen)
 
 if __name__ == "__main__":
-    main()
-if __name__ == "__main__":
     print("🔧 EJECUTANDO MODO DE PRUEBA...")
     from notifier import notify_telegram  # si la función está en el mismo archivo, llama directo
     notify_telegram("✅ PRUEBA: El sistema de monitor JNE está funcionando y puede enviarte alertas.")
