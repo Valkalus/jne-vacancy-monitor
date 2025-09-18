@@ -1,5 +1,9 @@
 name: Monitor JNE
 
+# Permisos para que el workflow pueda hacer push de cambios (seen.json)
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: "*/5 * * * *"
