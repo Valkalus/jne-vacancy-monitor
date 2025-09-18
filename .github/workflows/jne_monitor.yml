@@ -1,6 +1,5 @@
 name: Monitor JNE
 
-# Permisos para que el workflow pueda hacer push de cambios (seen.json)
 permissions:
   contents: write
 
@@ -15,7 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          # checkout must fetch the token-enabled remote ref
           persist-credentials: true
 
       - name: Configurar Python
@@ -27,6 +25,14 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Ejecutar monitor
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
         run: python monitor_jne.py
 
       - name: Guardar estado
