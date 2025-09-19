@@ -12,11 +12,19 @@ SEEN_FILE = "seen.json"
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-SMTP_USER = os.getenv("SMTP_USER")
-SMTP_PASS = os.getenv("SMTP_PASS")
-SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-NOTIFY_EMAIL_TO = os.getenv("NOTIFY_EMAIL_TO")
+# SMTP / email settings — manejar valores faltantes de forma segura
+SMTP_USER = os.getenv("SMTP_USER") or None
+SMTP_PASS = os.getenv("SMTP_PASS") or None
+SMTP_HOST = os.getenv("SMTP_HOST") or "smtp.gmail.com"
+
+# Intentar convertir SMTP_PORT a entero; si falla, usar 587 por defecto
+_port_raw = os.getenv("SMTP_PORT")
+try:
+    SMTP_PORT = int(_port_raw) if _port_raw and _port_raw.strip() != "" else 587
+except (ValueError, TypeError):
+    SMTP_PORT = 587
+
+NOTIFY_EMAIL_TO = os.getenv("NOTIFY_EMAIL_TO") or None
 
 KEYWORDS = ["CAS", "D.L. 728", "Locación", "Locacion", "Servicio"]
 
